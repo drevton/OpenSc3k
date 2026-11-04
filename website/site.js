@@ -26,8 +26,8 @@
   // Highlight the visitor's platform and tailor the primary button
   var ua = navigator.userAgent || '', plat = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
   var os = /Mac/i.test(plat + ua) && !/iPhone|iPad/i.test(ua) ? 'mac' : /Win/i.test(plat + ua) ? 'win' : /Linux|X11/i.test(plat + ua) && !/Android/i.test(ua) ? 'linux' : '';
-  var labels = { mac: 'Download for macOS', win: 'Download for Windows', linux: 'Build for Linux' };
-  var links = { mac: 'downloads/OpenSc3k-macos-arm64.dmg', win: 'downloads/OpenSc3k-windows-x64.zip', linux: '#build' };
+  var labels = { mac: 'Download for macOS', win: 'Download for Windows', linux: 'Download for Linux' };
+  var links = { mac: 'https://github.com/drevton/OpenSc3k/releases/download/v0.1.0/OpenSc3k-macos-arm64.dmg', win: 'https://github.com/drevton/OpenSc3k/releases/download/v0.1.0/OpenSc3k-windows-x64.zip', linux: 'https://github.com/drevton/OpenSc3k/releases/download/v0.1.0/OpenSc3k-linux-x64.zip' };
   if (os) {
     var card = document.querySelector('.dl .card[data-os="' + os + '"]');
     if (card) card.classList.add('current');
