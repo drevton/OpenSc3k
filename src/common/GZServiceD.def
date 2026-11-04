@@ -1,0 +1,3 @@
+LIBRARY GZServiceD
+EXPORTS
+  GZDllGetGZCOMDirector=ScServicesDllGetGZCOMDirector @1

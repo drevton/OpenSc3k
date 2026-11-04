@@ -1,0 +1,60 @@
+#include "advisors/ad_module.h"
+#include "audio/audio_core.h"
+#include "audio/device.h"
+#include "buildings/architect/api.h"
+#include "buildings/bd_power.h"
+#include "city/api.h"
+#include "city/ct_scenario.h"
+#include "city/initialization.h"
+#include "city/module.h"
+#include "common/api.h"
+#include "common/com.h"
+#include "common/services_module.h"
+#include "common/value.h"
+#include "disasters/ds_module.h"
+#include "economy/ec_module.h"
+#include "economy/ec_rci_module.h"
+#include "geometry/api.h"
+#include "graphics/image_codecs.h"
+#include "graphics/module.h"
+#include "misc/api.h"
+#include "network/nw_module.h"
+#include "network/street.h"
+#include "resources/factory.h"
+#include "sprites/api.h"
+#include "terrain/api.h"
+#include "ui/ui_module.h"
+#include "window/api.h"
+#include "window/tools.h"
+
+// Register each linked director immediately, preserving construction, class enumeration and startup order.
+// Logical module names retain the separate registry identities and shutdown ordering without filename lookup.
+void ScRegisterBuiltInDirectors(ScComCore *com) {
+  com->RegisterDirector(AuGetAudioDirector(), ScString("AUDIO"));
+  com->RegisterDirector(GxGetGimexDirector(), ScString("GIMEX"));
+  com->RegisterDirector(GxGetDirector(), ScString("GZGraphicD"));
+  com->RegisterDirector(RsGetDirector(), ScString("GZResourceD"));
+  com->RegisterDirector(ScGetServicesDirector(), ScString("GZServiceD"));
+  com->RegisterDirector(AuGetDirector(), ScString("GZSOUNDD"));
+  com->RegisterDirector(ScGetToolsDirector(), ScString("GZTOOLSD"));
+  com->RegisterDirector(WnGetDirector(), ScString("GZWIND"));
+  com->RegisterDirector(CtGetScenarioDirector(), ScString("SCENARIO"));
+  com->RegisterDirector(AdGetDirector(), ScString("SIMADV"));
+  com->RegisterDirector(BdGetDirector(), ScString("SIMBABLD"));
+  com->RegisterDirector(CtGetDirector(), ScString("SIMCITY"));
+  com->RegisterDirector(TrGetDirector(), ScString("SIMDIRT"));
+  com->RegisterDirector(DsGetDirector(), ScString("SIMDSTR"));
+  com->RegisterDirector(EcGetDirector(), ScString("SIMECO"));
+  com->RegisterDirector(GeGetDirector(), ScString("SIMGEOM"));
+  com->RegisterDirector(CtGetInitDirector(), ScString("SIMINIT"));
+  com->RegisterDirector(ScGetMiscDirector(), ScString("SIMMISC"));
+  com->RegisterDirector(NwGetDirector(), ScString("SIMNTWRK"));
+  com->RegisterDirector(EcGetRciDirector(), ScString("SIMRCI"));
+  com->RegisterDirector(CtGetServiceDirector(), ScString("SIMSERV"));
+  com->RegisterDirector(SpGetDirector(), ScString("SIMSPR"));
+  com->RegisterDirector(NwGetTransitDirector(), ScString("SIMTRANSIT"));
+  com->RegisterDirector(UiGetDirector(), ScString("SIMUI"));
+  com->RegisterDirector(ScGetSimutilDirector(), ScString("SIMUTIL"));
+  com->RegisterDirector(ScGetVariableDirector(), ScString("SIMVARIABLES"));
+  com->RegisterDirector(NwGetStreetDirector(), ScString("STRTSIM"));
+}

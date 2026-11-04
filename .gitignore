@@ -1,0 +1,19 @@
+build/
+/ida-live/
+__pycache__/
+*.i64
+*.idb
+*.id0
+*.id1
+*.id2
+*.nam
+*.til
+*.pdb
+
+# Version the packed/store IDA snapshots; ignore live components and backups.
+!/ida/*.i64
+!/ida/*.idb
+/ida/*.bak
+.DS_Store
+/ida/
+/build*/

@@ -1,0 +1,51 @@
+OpenSc3k is licensed under the GNU General Public License, version 3 or (at your option) any later version.
+See LICENSE. The third-party material below remains under its own terms, all of which are compatible with the GPL:
+  - sc3k-gzcom-dll headers (LGPL-2.1-or-later), used here under GPL-3.0-or-later as the LGPL permits;
+    notices in docs/licenses/.
+  - sc3kre (MIT), attributed below.
+  - IJG JPEG 6a in third_party/jpeg6a (IJG license).
+  - SDL3 and SDL3_ttf (zlib) and FreeType (FreeType License or GPLv2), fetched and linked statically at build time.
+
+sc3kre -- SimCity 3000 Unlimited reverse-engineering reference
+https://github.com/nanofives/sc3kre
+Reviewed revision: 0d1594ffad7f4bc2410e5ccb990fd0bf8deefaf4
+
+Used as an attributed source of address, class and interface leads.
+City-save format and optional-field grammar in src/city_map.c and its
+reference check also adapt the upstream MIT Python parsing tools.
+TKB1 primary-appearance extraction in src/city_sprite_definition.c adapts
+sprite_patch.py format parsing, with installed SIMGEOM/SIMSPR checks.
+Selected occupant attribute parsing in src/city_occupant_attributes.c also
+uses sprite_patch.py/netmod/netpack.py TKB1 grammar leads, with the installed
+SIMGEOM attribute loader, layer-mask getter and purpose selector checked. Local
+NET_ART.md and netmod/exemplars.py/sprites.py also supplied network-art
+resource and placement leads, checked against installed SIMNTWRK/SIMSPR.
+The upstream functions.csv also supplies low-zoom display-list and dirty-
+rectangle/spatial-grid interface leads, verified against installed SIMSPR before porting.
+Local binary checks remain the authority for this reconstruction. No upstream game
+binaries, extracted assets or decompiled game implementation are incorporated.
+
+MIT License
+
+Copyright (c) 2026 nanofives
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+The upstream license applies to its authors' tools and analysis, and does not
+grant rights in SimCity 3000 Unlimited or its game data.

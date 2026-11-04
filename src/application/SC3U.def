@@ -1,0 +1,3 @@
+NAME SC3U
+EXPORTS
+  GZDllGetGZCOMDirector @1

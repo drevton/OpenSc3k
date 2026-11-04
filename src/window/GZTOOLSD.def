@@ -1,0 +1,3 @@
+LIBRARY GZTOOLSD
+EXPORTS
+  GZDllGetGZCOMDirector=ScToolsDllGetGZCOMDirector @1

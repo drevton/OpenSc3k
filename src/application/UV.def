@@ -1,0 +1,9 @@
+LIBRARY UV.DLL
+EXPORTS
+  uV_Open
+  uV_Close
+  uV_Play_FromHandle
+  uV_is_Playing
+  uV_Stop
+  uV_Pause
+  uV_SetAudioVolume

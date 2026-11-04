@@ -1,0 +1,2 @@
+# Preserve upstream IJG source files byte-for-byte, including original line-end whitespace.
+* whitespace=-blank-at-eol

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenSc3k — SimCity 3000 Unlimited, open source</title>
+<meta name="description" content="OpenSc3k is an open-source C++ reimplementation of SimCity 3000 Unlimited for macOS, Windows and Linux, built on SDL3.">
+<meta name="theme-color" content="#0b0e1a">
+<meta property="og:title" content="OpenSc3k — SimCity 3000 Unlimited, open source">
+<meta property="og:description" content="Play your copy of SimCity 3000 Unlimited natively on macOS, Windows and Linux.">
+<meta property="og:image" content="https://opensc3k.com/img/hero.jpg">
+<meta property="og:url" content="https://opensc3k.com/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/icon.png">
+<link rel="apple-touch-icon" href="img/icon.png">
+<link rel="stylesheet" href="style.css">
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="grid-bg"></div></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/icon.png" alt="" width="34" height="34">OpenSc3k</a>
+    <nav class="links">
+      <a href="#features">Features</a>
+      <a href="#screens">Screenshots</a>
+      <a href="#download">Download</a>
+      <a href="#build">Build</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn small" href="https://github.com/drevton/OpenSc3k">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+        GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <section class="hero">
+     <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span> Free and open source</span>
+      <h1>SimCity 3000, <span class="grad">running everywhere.</span></h1>
+      <p class="lead">OpenSc3k is an open-source C++ reimplementation of SimCity 3000 Unlimited. One small native executable for macOS, Windows and Linux, powered by SDL3 and the resources from your own copy of the game.</p>
+      <div class="cta">
+        <a class="btn primary" id="primary-dl" href="#download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M4 20h16"/></svg>
+          <span id="primary-label">Download</span></a>
+        <a class="btn" href="#screens">See it running</a>
+      </div>
+      <p class="sub" id="primary-sub">Requires your own installed copy of SimCity 3000 Unlimited.</p>
+      <ul class="facts"><li><b>1</b> executable</li><li><b>3</b> platforms</li><li><b>C++23</b></li><li><b>GPL</b> v3+</li></ul>
+     </div>
+
+      <div class="stage reveal" id="stage">
+        <div class="window" id="tilt">
+          <div class="bar"><i></i><i></i><i></i><span>OpenSc3k</span></div>
+          <img src="img/hero.jpg" alt="The OpenSc3k main menu running on macOS" width="1280" height="968">
+        </div>
+        <div class="glow"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="strip" aria-hidden="true">
+    <div class="track">
+      <span>C++23</span><span>SDL3</span><span>macOS</span><span>Windows</span><span>Linux</span><span>One executable</span><span>GPL-3.0-or-later</span><span>Your game, your files</span>
+      <span>C++23</span><span>SDL3</span><span>macOS</span><span>Windows</span><span>Linux</span><span>One executable</span><span>GPL-3.0-or-later</span><span>Your game, your files</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="features">
+      <div class="kicker reveal">Why OpenSc3k</div>
+      <h2 class="reveal">The classic city builder, rebuilt in the open.</h2>
+      <p class="lede reveal">Same simulation, same interface, same cities — as readable modern code you can run, study and change.</p>
+      <div class="cards">
+        <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3>Native on your platform</h3><p>Runs natively on Apple silicon Macs, Windows x64 and Linux. No emulation layer, no installer, no compatibility shims.</p></div>
+        <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div><h3>One small executable</h3><p>SDL3, SDL_ttf and FreeType are linked statically. Download one file, point it at your game folder, play.</p></div>
+        <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 4l-4 16"/></svg></div><h3>Open and hackable</h3><p>Plain C++23 under the GPL, organised by module — city, network, economy, disasters, audio and UI — so it is easy to read and extend.</p></div>
+        <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div><h3>Deterministic simulation</h3><p>The city simulator follows the original rules closely, so the cities you know grow and behave the way you remember.</p></div>
+        <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="1.5"/><circle cx="16" cy="12" r="1.5"/><circle cx="10" cy="17" r="1.5"/></svg></div><h3>Your game, your files</h3><p>No game assets are bundled. OpenSc3k reads the resources from your own legitimate installation and remembers where it is.</p></div>
+        <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2M17 3h4v4"/></svg></div><h3>Built to last</h3><p>Reproducible builds with CMake, cross-compiling for Windows with clang, and continuous builds for every platform.</p></div>
+      </div>
+    </section>
+
+    <section id="screens">
+      <div class="kicker reveal">Screenshots</div>
+      <h2 class="reveal">See it running.</h2>
+      <p class="lede reveal">Captured from OpenSc3k on macOS, using the cities that ship with the game. Click any image to enlarge.</p>
+      <div class="gallery" id="gallery">
+        <figure class="reveal"><button type="button" data-full="img/berlin.jpg" data-cap="Berlin — towers, rivers and bridges"><img src="img/berlin.jpg" alt="Berlin — towers, rivers and bridges" loading="lazy"><figcaption>Berlin — towers, rivers and bridges</figcaption></button></figure>
+        <figure class="reveal"><button type="button" data-full="img/madrid.jpg" data-cap="Madrid — over a million Sims"><img src="img/madrid.jpg" alt="Madrid — over a million Sims" loading="lazy"><figcaption>Madrid — over a million Sims</figcaption></button></figure>
+        <figure class="reveal"><button type="button" data-full="img/farmsville.jpg" data-cap="Farmsville — farmland, rail and a small town"><img src="img/farmsville.jpg" alt="Farmsville — farmland, rail and a small town" loading="lazy"><figcaption>Farmsville — farmland, rail and a small town</figcaption></button></figure>
+        <figure class="reveal"><button type="button" data-full="img/moscow.jpg" data-cap="The Llama suggests… the original interface, rendered natively"><img src="img/moscow.jpg" alt="The Llama suggests… the original interface, rendered natively" loading="lazy"><figcaption>The Llama suggests… the original interface, rendered natively</figcaption></button></figure>
+      </div>
+    </section>
+
+    <section id="download">
+      <div class="kicker reveal">Download</div>
+      <h2 class="reveal">Get OpenSc3k.</h2>
+      <p class="lede reveal">Free to download. You need your own installed copy of <em>SimCity 3000 Unlimited</em> — OpenSc3k does not include any game assets.</p>
+      <div class="dl">
+        <div class="card reveal" data-os="mac"><span class="tag">Your system</span><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 7c-.6-1.8 1-3.5 3-3.5.1 2-1.4 3.6-3 3.5Z"/><path d="M17.5 12.5c0 2 1.6 3 1.6 3s-1.4 4.5-3.6 4.5c-1 0-1.5-.6-2.6-.6s-1.6.6-2.6.6C8 20 5 16 5 12.6 5 9.7 6.9 8 8.9 8c1.2 0 2.1.7 3.1.7s2-.7 3.2-.7c1 0 2.3.5 3 1.6-1.7.9-1.7 2.3-1.7 2.9Z"/></svg></div>
+          <h3>macOS</h3><div class="meta">Apple silicon · 6.2 MB · .dmg</div>
+          <a class="btn primary" href="downloads/OpenSc3k-macos-arm64.dmg">Download for macOS</a></div>
+        <div class="card reveal" data-os="win"><span class="tag">Your system</span><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 5.5 11 4v7.5H3zM13 3.7 21 2.5v9H13zM3 12.5h8V20l-8-1.5zM13 12.5h8v9l-8-1.2z"/></svg></div>
+          <h3>Windows</h3><div class="meta">x64 · 5.6 MB · .zip</div>
+          <a class="btn primary" href="downloads/OpenSc3k-windows-x64.zip">Download for Windows</a></div>
+        <div class="card reveal" data-os="linux"><span class="tag">Your system</span><div class="ico"><svg viewBox="0 0 24 24"><path d="M5 20c2 0 2-2 3-3s0-4 1-6 0-6 3-6 3 4 3 6 1 4 2 6 1 3 3 3"/></svg></div>
+          <h3>Linux</h3><div class="meta">x64 · build from source</div>
+          <a class="btn" href="#build">Build instructions</a></div>
+      </div>
+      <p class="sub" style="margin-top:14px">Checksums: <a href="downloads/SHA256SUMS">SHA256SUMS</a></p>
+      <ol class="steps">
+        <li class="reveal"><b>Own the game</b>Have SimCity 3000 Unlimited installed — the folder that contains <code>Apps</code> with <code>Sys</code> and <code>Res</code>.</li>
+        <li class="reveal"><b>Install OpenSc3k</b>macOS: drag it into Applications. Windows: unzip anywhere. If macOS blocks the app, right-click it and choose Open.</li>
+        <li class="reveal"><b>Pick your game folder</b>On first start OpenSc3k asks where the game is installed and remembers it.</li>
+      </ol>
+    </section>
+
+    <section id="build">
+      <div class="kicker reveal">Build it yourself</div>
+      <h2 class="reveal">From source in two commands.</h2>
+      <p class="lede reveal">CMake 3.25+, a C++23 compiler and Python 3. SDL is fetched and linked statically on first configure.</p>
+      <div class="codes">
+      <div class="code reveal"><div class="head"><span>macOS · Linux · Windows</span><button class="copy" data-copy="build">Copy</button></div>
+<pre><code id="code-build">cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --target sc3u
+SC3_GAME_DIR=/path/to/SimCity3000 build/OpenSc3k -w</code></pre></div>
+      <div class="code reveal"><div class="head"><span>Cross-compile for Windows from macOS or Linux (clang + mingw-w64)</span><button class="copy" data-copy="cross">Copy</button></div>
+<pre><code id="code-cross">cmake -S . -B build/windows -G Ninja -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_TOOLCHAIN_FILE=cmake/windows-x64-clang-mingw.cmake
+cmake --build build/windows --target sc3u</code></pre></div>
+      </div>
+    </section>
+
+    <section id="faq">
+     <div class="faq-layout">
+      <div class="faq-head">
+        <div class="kicker reveal">FAQ</div>
+        <h2 class="reveal">Questions.</h2>
+        <p class="lede reveal" style="margin-bottom:0">Short answers to the things people ask first.</p>
+      </div>
+      <div class="reveal">
+        <details><summary>Do I need the original game?</summary><p>Yes. OpenSc3k contains no game assets. It loads the graphics, sounds, text and cities from your own installed copy of SimCity 3000 Unlimited.</p></details>
+        <details><summary>Which platforms are supported?</summary><p>macOS on Apple silicon, Windows x64 and Linux x64. Every push is built for all three.</p></details>
+        <details><summary>Is it finished?</summary><p>The game starts, loads cities and plays. It is under active development, so expect some rough edges.</p></details>
+        <details><summary>Is it affiliated with the original developers?</summary><p>No. SimCity 3000 is a trademark of its owners. OpenSc3k is an independent open-source project.</p></details>
+        <details><summary>How is it licensed?</summary><p>GNU General Public License v3.0 or later. Third-party components and their notices are listed in the repository.</p></details>
+        <details><summary>macOS says the app can't be opened.</summary><p>The app is not notarized. Right-click it and choose Open once, or run <code>xattr -dr com.apple.quarantine /Applications/OpenSc3k.app</code> in Terminal.</p></details>
+      </div>
+     </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap"><div class="cols">
+    <div>
+      <p><strong>OpenSc3k</strong> is free software under the GNU General Public License v3.0 or later. SimCity 3000 is a trademark of its owners; this project is not affiliated with or endorsed by them, and it contains no original game assets. Screenshots show cities and artwork from the original game.</p>
+    </div>
+    <div><a href="https://github.com/drevton/OpenSc3k">GitHub</a> · <a href="downloads/SHA256SUMS">Checksums</a></div>
+  </div></div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot viewer">
+  <button class="close" aria-label="Close">×</button>
+  <button class="prev" aria-label="Previous">‹</button>
+  <img id="lb-img" alt="">
+  <button class="next" aria-label="Next">›</button>
+  <div class="cap" id="lb-cap"></div>
+</div>
+<script src="site.js"></script>
+</body>
+</html>

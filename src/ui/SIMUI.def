@@ -1,0 +1,3 @@
+LIBRARY SIMUI
+EXPORTS
+  GZDllGetGZCOMDirector=UiDllGetGZCOMDirector @1

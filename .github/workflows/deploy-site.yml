@@ -1,0 +1,27 @@
+name: deploy-site
+
+# Upload website/ to opensc3k.com whenever it changes. Needs two repository secrets: OPENSC3K_DEPLOY_KEY, the private half
+# of a key restricted on the server to rsync into /srv/opensc3k.com, and OPENSC3K_DEPLOY_USER, the account it logs in as.
+on:
+  push:
+    branches: [main]
+    paths: ['website/**', '.github/workflows/deploy-site.yml']
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload
+        env:
+          DEPLOY_KEY: ${{ secrets.OPENSC3K_DEPLOY_KEY }}
+          DEPLOY_USER: ${{ secrets.OPENSC3K_DEPLOY_USER }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo 'opensc3k.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILhO4QPgB9cCkvBIwKZkNTK3eB1HyXQcF6tUSB4rwFEM' > ~/.ssh/known_hosts_opensc3k
+          rsync -rlt --delete --exclude .nojekyll --exclude /downloads/ \
+            -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts_opensc3k" \
+            website/ "$DEPLOY_USER@opensc3k.com:./"

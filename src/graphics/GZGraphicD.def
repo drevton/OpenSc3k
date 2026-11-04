@@ -1,0 +1,3 @@
+LIBRARY GZGraphicD
+EXPORTS
+  GZDllGetGZCOMDirector=GxDllGetGZCOMDirector @1

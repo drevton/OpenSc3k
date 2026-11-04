@@ -1,0 +1,2 @@
+// The first icon resource becomes the executable's icon in Explorer and the taskbar.
+1 ICON "app.ico"

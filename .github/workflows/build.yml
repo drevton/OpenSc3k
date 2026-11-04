@@ -1,0 +1,109 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+env:
+  README_TEXT: |
+    OpenSc3k needs your own installed copy of SimCity 3000 Unlimited (the folder that contains Apps/ with Sys/ and Res/).
+    Run it from a terminal:  OpenSc3k -w -intro:off
+    On first start it asks for the game folder; set SC3_GAME_DIR to skip the prompt.
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --target sc3u
+      - name: Package
+        run: |
+          mkdir dist
+          # A version tag such as v0.1.0 sets the app's reported version.
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${GITHUB_REF_NAME#v}" packaging/macos/Info.plist
+          fi
+          packaging/macos/make_app.sh build/OpenSc3k dist
+          ln -s /Applications dist/Applications
+          cp packaging/macos/AppIcon.icns dist/.VolumeIcon.icns
+          hdiutil create -volname OpenSc3k -srcfolder dist -fs HFS+ -format UDZO -ov OpenSc3k-macos-arm64.dmg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OpenSc3k-macos-arm64
+          path: OpenSc3k-macos-arm64.dmg
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependencies for SDL3
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxi-dev \
+            libxss-dev libxfixes-dev libwayland-dev libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev \
+            libasound2-dev libpulse-dev libudev-dev libdbus-1-dev libxtst-dev libegl1-mesa-dev libgles2-mesa-dev \
+            libibus-1.0-dev
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --target sc3u
+      - name: Package
+        run: |
+          mkdir dist
+          cp build/OpenSc3k dist/
+          echo "$README_TEXT" > dist/README.txt
+          (cd dist && zip -q -r ../OpenSc3k-linux-x64.zip .)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OpenSc3k-linux-x64
+          path: OpenSc3k-linux-x64.zip
+
+  windows:
+    # Cross-compiled with clang and mingw-w64 (see cmake/windows-x64-clang-mingw.cmake); needs no Windows runner.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install toolchain
+        run: brew install ninja mingw-w64
+      - name: Configure
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_TOOLCHAIN_FILE=cmake/windows-x64-clang-mingw.cmake
+      - name: Build
+        run: cmake --build build --target sc3u
+      - name: Package
+        run: |
+          mkdir dist
+          cp build/OpenSc3k.exe dist/
+          printf '%s\n' "$README_TEXT" | sed 's/OpenSc3k -w/OpenSc3k.exe -w/' > dist/README.txt
+          (cd dist && zip -q -r ../OpenSc3k-windows-x64.zip .)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OpenSc3k-windows-x64
+          path: OpenSc3k-windows-x64.zip
+
+  release:
+    # Publish the zips as a GitHub release when a version tag (for example v0.1.0) is pushed.
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [macos, linux, windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Re-publishing a tag replaces its existing release.
+          gh release delete "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --yes 2>/dev/null || true
+          gh release create "$GITHUB_REF_NAME" artifacts/* --repo "$GITHUB_REPOSITORY" --generate-notes

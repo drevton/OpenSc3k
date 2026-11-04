@@ -1,0 +1,3 @@
+LIBRARY SimTransit
+EXPORTS
+  GZDllGetGZCOMDirector @1

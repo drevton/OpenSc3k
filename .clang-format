@@ -1,0 +1,37 @@
+BasedOnStyle: LLVM
+Language: Cpp
+IndentWidth: 2
+ContinuationIndentWidth: 4
+AlignAfterOpenBracket: DontAlign
+AlignOperands: DontAlign
+ColumnLimit: 120
+BreakBeforeBraces: Attach
+RemoveBracesLLVM: true
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+PointerAlignment: Right
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IncludeCategories:
+  - Regex: '^<ext/.*\.h>'
+    Priority: 2
+  - Regex: '^<.*\.h>'
+    Priority: 1
+  - Regex: '^<.*'
+    Priority: 2
+  - Regex: '^"(advisors|application|audio|buildings|city|common|disasters|economy|environment)/'
+    Priority: 4
+  - Regex: '^"(fonts|geometry|graphics|misc|network|occupants|resources|sprites|terrain|ui|window)/'
+    Priority: 4
+  - Regex: '^"(\.\./)*(build|comparison|tests|src)/'
+    Priority: 4
+  - Regex: '.*'
+    Priority: 3
+SeparateDefinitionBlocks: Always
+MaxEmptyLinesToKeep: 1
+ReflowComments: false
+BreakStringLiterals: true

@@ -1,0 +1,3 @@
+LIBRARY GIMEX
+EXPORTS
+  GZDllGetGZCOMDirector=GxGimexDllGetGZCOMDirector @1

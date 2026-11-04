@@ -1,0 +1,3 @@
+LIBRARY SIMSPR
+EXPORTS
+  GZDllGetGZCOMDirector=SpDllGetGZCOMDirector @1
