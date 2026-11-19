@@ -1156,7 +1156,7 @@ static u32 CtInitSavePlatformError() {
 // Select and validate a save filename, write through a temporary segment, and replace the target with backup recovery.
 // Localized extensions, overwrite prompts and failures retain their installed ordering.
 u8 CtInitSaveCommand::SavePath(ScString *inputPath) {
-  ScString path, directory, extension;
+  ScString path, extension;
   ScMessageServer *messages = CtGetInitMessageServer();
   CtInitCursorScope cursor(14);
   ScString selected, firstExtension, secondExtension;
@@ -1270,6 +1270,7 @@ u8 CtInitSaveCommand::SavePath(ScString *inputPath) {
     CtInitCursorScope savingCursor(14);
     u32 error = 0;
     bool saved = false;
+    ScString temporary;
     if (!RsFile::IsFileWritable(path)) {
       error = CtInitSavePlatformError();
       if (error == EACCES || error == EPERM)
@@ -1278,43 +1279,60 @@ u8 CtInitSaveCommand::SavePath(ScString *inputPath) {
         error = kRsFileErrorInvalidDirectory;
       else if (error == ENAMETOOLONG)
         error = kRsFileErrorNameTooLong;
-    } else if (!RsFile::MakeTempPathName(&directory)) {
-      error = CtInitSavePlatformError();
     } else {
-      RsDatabaseSegment *segment = nullptr;
-      if (CtGetInitDirector()->GZCOM()->GetClassObject(
-              kRsLayeredFileClassId, IID_RsDatabaseSegment, reinterpret_cast<void **>(&segment))) {
-        RsFileSegment *file = nullptr;
-        if (segment->QueryInterface(IID_RsFileSegment, reinterpret_cast<void **>(&file))) {
-          if (file->OpenWrite(&directory)) {
-            messages->MessageSend(
-                ScMessage(kCtMsg_SaveToSegment, reinterpret_cast<uptr>(segment), reinterpret_cast<uptr>(&path), 0));
-            segment->Shutdown();
-          }
-          file->Release();
-        }
-      }
-      if (segment)
-        segment->Release();
-      bool available = !RsFile::FileExists(path);
-      if (!available) {
-        extra = path.Left(path.Strlen() - 1);
-        extra.Append("_");
-        available = RsFile::Rename(path, extra);
-      }
-      if (available) {
-        saved = RsFile::Copy(directory, path, true);
-        if (!saved) {
-          error = CtInitSavePlatformError();
-          if (extra.Strlen())
-            RsFile::Rename(extra, path);
-        }
-      } else {
+      // The temporary archive must be created beside its requested destination. The
+      // old process-wide temporary name is relative to the current working directory;
+      // Finder launches commonly give a non-writable working directory on macOS, even
+      // when the directory chosen in the save dialog is writable. Keeping the
+      // temporary file in the chosen directory also makes the permission check and
+      // final replacement operate on the same volume.
+      ScString targetDirectory;
+      if (!RsFile::GetPathDirectory(path, &targetDirectory) || !RsFile::MakeTempFileName(targetDirectory, &temporary)) {
         error = CtInitSavePlatformError();
+      } else {
+        RsDatabaseSegment *segment = nullptr;
+        bool wroteArchive = false;
+        if (CtGetInitDirector()->GZCOM()->GetClassObject(
+                kRsLayeredFileClassId, IID_RsDatabaseSegment, reinterpret_cast<void **>(&segment))) {
+          RsFileSegment *file = nullptr;
+          if (segment->QueryInterface(IID_RsFileSegment, reinterpret_cast<void **>(&file))) {
+            if (file->OpenWrite(&temporary)) {
+              messages->MessageSend(
+                  ScMessage(kCtMsg_SaveToSegment, reinterpret_cast<uptr>(segment), reinterpret_cast<uptr>(&path), 0));
+              segment->Shutdown();
+              wroteArchive = true;
+            } else {
+              error = CtInitSavePlatformError();
+            }
+            file->Release();
+          }
+        }
+        if (segment)
+          segment->Release();
+        if (!wroteArchive && error == kRsFileErrorNone)
+          error = EIO;
+        if (wroteArchive) {
+          bool available = !RsFile::FileExists(path);
+          if (!available) {
+            extra = path.Left(path.Strlen() - 1);
+            extra.Append("_");
+            available = RsFile::Rename(path, extra);
+          }
+          if (available) {
+            saved = RsFile::Copy(temporary, path, true);
+            if (!saved) {
+              error = CtInitSavePlatformError();
+              if (extra.Strlen())
+                RsFile::Rename(extra, path);
+            }
+          } else {
+            error = CtInitSavePlatformError();
+          }
+        }
       }
     }
     if (saved || error == kRsFileErrorNone) {
-      RsFile::Delete(directory);
+      RsFile::Delete(temporary);
       if (extra.Strlen())
         RsFile::Delete(extra);
       city->SetFilePath(path);
@@ -1322,6 +1340,8 @@ u8 CtInitSaveCommand::SavePath(ScString *inputPath) {
       CtGetInitMessageServer()->MessagePost(ScMessage(kCtMsg_CityNameChanged), false);
       return true;
     }
+    if (temporary.Strlen())
+      RsFile::Delete(temporary);
     u32 resourceId = error == kRsFileErrorAccessFailure ? 39
         : error == kRsFileErrorNameTooLong              ? 42
         : error == kRsFileErrorInvalidDirectory         ? 45
